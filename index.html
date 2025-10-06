@@ -59,19 +59,35 @@ header p{
 }
 .track{
   display:flex;
-  justify-content:space-between;
+  justify-content:center;
   align-items:center;
-  padding:12px 14px;
+  padding:14px;
   border-radius:10px;
   margin-bottom:10px;
-  transition:0.15s;
+  transition:0.25s;
   cursor:pointer;
   flex-wrap:wrap;
-  gap:8px;
+  text-align:center;
+  gap:10px;
 }
-.track:hover{transform:translateY(-3px);background:rgba(255,255,255,0.08);}
+.track:hover{
+  transform:scale(1.03);
+  background:rgba(255,255,255,0.08);
+  box-shadow:0 0 12px rgba(255,107,107,0.4);
+}
 .track .num{width:36px;text-align:center;color:#aaa;font-weight:800;flex-shrink:0;}
-.track .title{font-weight:800;color:#fff;flex:1;min-width:180px;}
+.track .title{
+  font-weight:800;
+  color:#fff;
+  flex:1;
+  text-align:center;
+  font-size:1.05rem;
+  transition:0.25s;
+}
+.track:hover .title{
+  color:#ff6b6b;
+  text-shadow:0 0 10px rgba(255,107,107,0.5);
+}
 .track .duration{color:#aaa;font-weight:700;flex-shrink:0;}
 
 /* MINI PLAYER */
@@ -184,11 +200,7 @@ header p{
 .fade-in{animation:fadeIn .35s ease both}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-/* ====================== */
-/*     RESPONSIVE CSS     */
-/* ====================== */
-
-/* TABLETY */
+/* RESPONSIVE */
 @media (max-width: 900px) {
   header img.hero {width:220px;height:220px;}
   header h1 {font-size:2rem;}
@@ -197,22 +209,15 @@ header p{
   #time-big {font-size:1.8rem;}
   .mini-title {max-width:180px;}
 }
-
-/* MOBILY */
 @media (max-width: 600px) {
   header {padding:30px 14px;}
   header img.hero {width:180px;height:180px;}
   header h1 {font-size:1.6rem;margin-top:18px;}
   header p {font-size:0.95rem;line-height:1.5;text-align:left;}
-  .track {flex-direction:column;align-items:flex-start;padding:10px;}
-  .track .duration {align-self:flex-end;}
-  .mini-left {flex-direction:row;align-items:center;}
+  .track {flex-direction:column;padding:10px;}
+  .track .duration {align-self:center;}
   .mini-cover {width:56px;height:56px;}
   .mini-title {max-width:140px;font-size:0.9rem;}
-  .mini-controls button {width:36px;height:36px;font-size:16px;}
-  #fullscreen-info {padding:24px 16px;}
-  .title-big {font-size:1.3rem;max-width:100%;}
-  #time-big {font-size:1.4rem;min-width:auto;}
   .controls button {width:44px;height:44px;font-size:18px;}
 }
 </style>
