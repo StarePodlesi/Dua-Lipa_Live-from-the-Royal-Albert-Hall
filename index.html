@@ -172,8 +172,8 @@ header p{
   font-weight:900;
   color:#fff;
   line-height:1.05;
-  max-width:68%;
   word-break:break-word;
+  flex:1;
 }
 .controls {display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 .controls button {
@@ -200,7 +200,7 @@ header p{
 .fade-in{animation:fadeIn .35s ease both}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-/* RESPONSIVE */
+/* RESPONSIVE FIX */
 @media (max-width: 900px) {
   header img.hero {width:220px;height:220px;}
   header h1 {font-size:2rem;}
@@ -209,6 +209,7 @@ header p{
   #time-big {font-size:1.8rem;}
   .mini-title {max-width:180px;}
 }
+
 @media (max-width: 600px) {
   header {padding:30px 14px;}
   header img.hero {width:180px;height:180px;}
@@ -219,6 +220,10 @@ header p{
   .mini-cover {width:56px;height:56px;}
   .mini-title {max-width:140px;font-size:0.9rem;}
   .controls button {width:44px;height:44px;font-size:18px;}
+  #fullscreen-info {padding:24px 20px;}
+  .info-row {flex-direction:column;align-items:flex-start;}
+  .title-big {font-size:1.4rem;max-width:100%;text-align:left;}
+  #time-big {font-size:1.3rem;text-align:left;}
 }
 </style>
 </head>
