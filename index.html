@@ -45,7 +45,7 @@ header p{
   color:#ddd;
   max-width:760px;
   margin:0 auto;
-  text-align:justify;
+  text-align:center; /* změna na center */
   padding:0 12px;
 }
 
@@ -215,7 +215,7 @@ header p{
   header {padding:30px 14px;}
   header img.hero {width:180px;height:180px;}
   header h1 {font-size:1.6rem;margin-top:18px;}
-  header p {font-size:0.95rem;line-height:1.5;text-align:left;}
+  header p {font-size:0.95rem;line-height:1.5;text-align:center;}
   .track {flex-direction:column;padding:10px;}
   .track .duration {align-self:center;}
   .mini-cover {width:56px;height:56px;}
@@ -339,7 +339,7 @@ const timeBig=document.getElementById("time-big");
 
 let currentIndex=0;
 let audio=new Audio();
-audio.autoplay=true;
+audio.autoplay=false; // <-- mini-player se nespustí hned
 audio.preload="metadata";
 
 function playTrack(index){
@@ -361,40 +361,30 @@ audio.addEventListener("ended",()=>playNext());
 miniPlay.addEventListener("click",()=>{audio.paused?audio.play():audio.pause();updateButtons();});
 miniPrev.addEventListener("click",playPrev);
 miniNext.addEventListener("click",playNext);
-miniExpand.addEventListener("click",()=>{fsPlayer.style.display="flex";bgVideo.play();});
+miniExpand.addEventListener("click",()=>{fsPlayer.style.display="flex";});
 
+closeFull.addEventListener("click",()=>{fsPlayer.style.display="none";});
 playBtn.addEventListener("click",()=>{audio.paused?audio.play():audio.pause();updateButtons();});
 prevBtn.addEventListener("click",playPrev);
 nextBtn.addEventListener("click",playNext);
-closeFull.addEventListener("click",()=>{fsPlayer.style.display="none";bgVideo.pause();});
 
 function updateButtons(){
   miniPlay.textContent=audio.paused?"▶":"⏸";
   playBtn.textContent=audio.paused?"▶":"⏸";
 }
-audio.addEventListener("play",updateButtons);
-audio.addEventListener("pause",updateButtons);
-
 audio.addEventListener("timeupdate",()=>{
-  const cur=Math.floor(audio.currentTime);
-  const dur=Math.floor(audio.duration)||1;
-  miniTime.textContent=formatTime(cur)+ " / "+formatTime(dur);
-  timeBig.textContent=formatTime(cur)+" / "+formatTime(dur);
-  progressFill.style.width=(cur/dur*100)+"%";
+  const c=Math.floor(audio.currentTime);
+  const d=Math.floor(audio.duration)||0;
+  const format=t=>`${Math.floor(t/60)}:${(t%60).toString().padStart(2,"0")}`;
+  miniTime.textContent=format(c)+" / "+format(d);
+  timeBig.textContent=format(c)+" / "+format(d);
+  progressFill.style.width=((c/d)*100||0)+"%";
 });
-progressBar.addEventListener("click",(e)=>{
+progressBar.addEventListener("click",e=>{
   const rect=progressBar.getBoundingClientRect();
   const pct=(e.clientX-rect.left)/rect.width;
-  audio.currentTime=pct*audio.duration;
+  audio.currentTime=audio.duration*pct;
 });
-function formatTime(sec){
-  const m=Math.floor(sec/60);
-  const s=Math.floor(sec%60);
-  return m+":"+ (s<10?"0"+s:s);
-}
-
-// Start with first track
-playTrack(0);
 </script>
 
 </body>
