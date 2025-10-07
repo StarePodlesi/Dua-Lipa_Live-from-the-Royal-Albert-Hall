@@ -44,7 +44,7 @@ header p{
   color:#ddd;
   max-width:760px;
   margin:0 auto;
-  text-align:justify;
+  text-align:center;
   padding:0 12px;
 }
 
@@ -71,9 +71,9 @@ header p{
   gap:10px;
 }
 .track:hover{
-  transform:scale(1.03);
+  transform:scale(1.05);
   background:rgba(255,255,255,0.08);
-  box-shadow:0 0 12px rgba(255,107,107,0.4);
+  box-shadow:0 0 15px rgba(255,107,107,0.5);
 }
 .track .num{width:36px;text-align:center;color:#aaa;font-weight:800;flex-shrink:0;}
 .track .title{
@@ -86,7 +86,7 @@ header p{
 }
 .track:hover .title{
   color:#ff6b6b;
-  text-shadow:0 0 10px rgba(255,107,107,0.5);
+  text-shadow:0 0 12px rgba(255,107,107,0.7);
 }
 .track .duration{color:#aaa;font-weight:700;flex-shrink:0;}
 
@@ -210,11 +210,12 @@ header p{
   .mini-title {max-width:180px;}
 }
 
+/* MOBILE FIX */
 @media (max-width: 600px) {
   header {padding:30px 14px;}
   header img.hero {width:180px;height:180px;}
   header h1 {font-size:1.6rem;margin-top:18px;}
-  header p {font-size:0.95rem;line-height:1.5;text-align:left;}
+  header p {font-size:0.95rem;line-height:1.5;text-align:center;}
   .track {flex-direction:column;padding:10px;}
   .track .duration {align-self:center;}
   .mini-cover {width:56px;height:56px;}
@@ -222,13 +223,12 @@ header p{
   .controls button {width:44px;height:44px;font-size:18px;}
   #fullscreen-info {padding:24px 20px;}
   .info-row {flex-direction:column;align-items:flex-start;}
-  .title-big {font-size:1.4rem;max-width:100%;text-align:left;}
+  .title-big {font-size:1.4rem;max-width:100%;white-space:normal;text-align:left;}
   #time-big {font-size:1.3rem;text-align:left;}
 }
 </style>
 </head>
 <body>
-
 <header>
   <img class="hero" src="Live_from_the_Royal_Albert_Hall.jfif" alt="Dua Lipa Live">
   <h1>Dua Lipa — Live from the Royal Albert Hall (2024)</h1>
