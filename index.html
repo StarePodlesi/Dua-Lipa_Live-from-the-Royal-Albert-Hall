@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Dua Lipa — Live from the Royal Albert Hall</title>
 <link rel="icon" href="Live_from_the_Royal_Albert_Hall.jfif" type="image/x-icon">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{
@@ -21,7 +22,7 @@ button{cursor:pointer;}
 header{
   position:relative;
   width:100%;
-  text-align:left;
+  text-align:center;
   padding:50px 20px;
   background:#0b0b0b;
 }
@@ -31,13 +32,11 @@ header img.hero{
   border-radius:16px;
   object-fit:cover;
   box-shadow:0 12px 50px rgba(0,0,0,.6);
-  display:block;
-  margin-bottom:20px;
 }
 header h1{
   font-size:2.4rem;
   font-weight:800;
-  margin-top:0;
+  margin-top:22px;
   margin-bottom:16px;
 }
 header p{
@@ -45,50 +44,52 @@ header p{
   line-height:1.6;
   color:#ddd;
   max-width:760px;
+  margin:0 auto;
   text-align:justify;
-  padding:0;
+  padding:0 12px;
 }
 
 /* TRACKLIST */
 .tracklist{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:18px;
-  max-width:1100px;
+  max-width:980px;
   margin:40px auto;
-  padding:20px;
+  padding:16px;
+  border-radius:12px;
+  background:rgba(255,255,255,0.05);
+  box-shadow:0 8px 30px rgba(0,0,0,0.4);
 }
 .track{
-  background:rgba(255,255,255,0.05);
-  border-radius:16px;
-  box-shadow:0 8px 30px rgba(0,0,0,0.4);
-  padding:24px 16px;
-  text-align:center;
-  transition:all .3s ease;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:14px;
+  border-radius:10px;
+  margin-bottom:10px;
+  transition:0.25s;
   cursor:pointer;
+  flex-wrap:wrap;
+  text-align:center;
+  gap:10px;
 }
 .track:hover{
-  transform:translateY(-6px) scale(1.03);
-  background:rgba(255,255,255,0.1);
-  box-shadow:0 0 20px rgba(255,107,107,0.6);
+  transform:scale(1.03);
+  background:rgba(255,255,255,0.08);
+  box-shadow:0 0 12px rgba(255,107,107,0.4);
 }
-.track .num{
-  font-weight:700;
-  font-size:1.1rem;
-  color:#ff6b6b;
-  margin-bottom:8px;
-}
+.track .num{width:36px;text-align:center;color:#aaa;font-weight:800;flex-shrink:0;}
 .track .title{
   font-weight:800;
-  font-size:1rem;
   color:#fff;
-  margin-bottom:6px;
+  flex:1;
+  text-align:center;
+  font-size:1.05rem;
+  transition:0.25s;
 }
-.track .duration{
-  font-weight:600;
-  color:#aaa;
-  font-size:0.9rem;
+.track:hover .title{
+  color:#ff6b6b;
+  text-shadow:0 0 10px rgba(255,107,107,0.5);
 }
+.track .duration{color:#aaa;font-weight:700;flex-shrink:0;}
 
 /* MINI PLAYER */
 #mini-player{
@@ -210,23 +211,25 @@ header p{
   .mini-title {max-width:180px;}
 }
 
-/* MOBILE FIX */
 @media (max-width: 600px) {
   header {padding:30px 14px;}
   header img.hero {width:180px;height:180px;}
   header h1 {font-size:1.6rem;margin-top:18px;}
-  header p {font-size:0.95rem;line-height:1.5;text-align:justify;}
+  header p {font-size:0.95rem;line-height:1.5;text-align:left;}
+  .track {flex-direction:column;padding:10px;}
+  .track .duration {align-self:center;}
   .mini-cover {width:56px;height:56px;}
   .mini-title {max-width:140px;font-size:0.9rem;}
   .controls button {width:44px;height:44px;font-size:18px;}
   #fullscreen-info {padding:24px 20px;}
   .info-row {flex-direction:column;align-items:flex-start;}
-  .title-big {font-size:1.4rem;max-width:100%;white-space:normal;text-align:left;}
+  .title-big {font-size:1.4rem;max-width:100%;text-align:left;}
   #time-big {font-size:1.3rem;text-align:left;}
 }
 </style>
 </head>
 <body>
+
 <header>
   <img class="hero" src="Live_from_the_Royal_Albert_Hall.jfif" alt="Dua Lipa Live">
   <h1>Dua Lipa — Live from the Royal Albert Hall (2024)</h1>
@@ -358,33 +361,41 @@ audio.addEventListener("ended",()=>playNext());
 miniPlay.addEventListener("click",()=>{audio.paused?audio.play():audio.pause();updateButtons();});
 miniPrev.addEventListener("click",playPrev);
 miniNext.addEventListener("click",playNext);
-miniExpand.addEventListener("click",()=>{fsPlayer.style.display="flex";});
+miniExpand.addEventListener("click",()=>{fsPlayer.style.display="flex";bgVideo.play();});
 
-closeFull.addEventListener("click",()=>{fsPlayer.style.display="none";});
 playBtn.addEventListener("click",()=>{audio.paused?audio.play():audio.pause();updateButtons();});
 prevBtn.addEventListener("click",playPrev);
 nextBtn.addEventListener("click",playNext);
+closeFull.addEventListener("click",()=>{fsPlayer.style.display="none";bgVideo.pause();});
 
 function updateButtons(){
   miniPlay.textContent=audio.paused?"▶":"⏸";
   playBtn.textContent=audio.paused?"▶":"⏸";
 }
+audio.addEventListener("play",updateButtons);
+audio.addEventListener("pause",updateButtons);
 
 audio.addEventListener("timeupdate",()=>{
-  const progress=(audio.currentTime/audio.duration)*100;
-  progressFill.style.width=progress+"%";
-  const cMin=Math.floor(audio.currentTime/60),cSec=Math.floor(audio.currentTime%60);
-  const dMin=Math.floor(audio.duration/60),dSec=Math.floor(audio.duration%60);
-  const fmt=(m,s)=>(m<10?"0"+m:m)+":"+(s<10?"0"+s:s);
-  miniTime.textContent=fmt(cMin,cSec)+" / "+fmt(dMin,dSec);
-  timeBig.textContent=fmt(cMin,cSec)+" / "+fmt(dMin,dSec);
+  const cur=Math.floor(audio.currentTime);
+  const dur=Math.floor(audio.duration)||1;
+  miniTime.textContent=formatTime(cur)+ " / "+formatTime(dur);
+  timeBig.textContent=formatTime(cur)+" / "+formatTime(dur);
+  progressFill.style.width=(cur/dur*100)+"%";
 });
-
 progressBar.addEventListener("click",(e)=>{
   const rect=progressBar.getBoundingClientRect();
   const pct=(e.clientX-rect.left)/rect.width;
   audio.currentTime=pct*audio.duration;
 });
+function formatTime(sec){
+  const m=Math.floor(sec/60);
+  const s=Math.floor(sec%60);
+  return m+":"+ (s<10?"0"+s:s);
+}
+
+// Start with first track
+playTrack(0);
 </script>
+
 </body>
 </html>
