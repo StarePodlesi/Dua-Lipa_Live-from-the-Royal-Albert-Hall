@@ -7,73 +7,71 @@
 <link rel="icon" href="Live_from_the_Royal_Albert_Hall.jfif" type="image/x-icon">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{ height:100%; font-family:"Inter",sans-serif; overflow-x:hidden; background:#0b0b0b; color:#fff; -webkit-font-smoothing:antialiased; }
-button{cursor:pointer;}
-/* HEADER */
-header{ position:relative; width:100%; text-align:center; padding:50px 20px; background:#0b0b0b; }
-header img.hero{ width:260px; height:260px; border-radius:16px; object-fit:cover; box-shadow:0 12px 50px rgba(0,0,0,.6); }
-header h1{ font-size:2.4rem; font-weight:800; margin-top:22px; margin-bottom:16px; }
-header p{ font-size:1.05rem; line-height:1.6; color:#ddd; max-width:760px; margin:0 auto; text-align:center; padding:0 12px; }
-/* TRACKLIST */
-.tracklist{ max-width:980px; margin:40px auto; padding:16px; border-radius:12px; background:rgba(255,255,255,0.05); box-shadow:0 8px 30px rgba(0,0,0,0.4); }
-.track{ display:flex; justify-content:center; align-items:center; padding:14px; border-radius:10px; margin-bottom:10px; transition:0.25s; cursor:pointer; flex-wrap:wrap; text-align:center; gap:10px; }
-.track:hover{ transform:scale(1.03); background:rgba(255,255,255,0.08); box-shadow:0 0 12px rgba(255,107,107,0.4); }
-.track .num{width:36px;text-align:center;color:#aaa;font-weight:800;flex-shrink:0;}
-.track .title{ font-weight:800; color:#fff; flex:1; text-align:center; font-size:1.05rem; transition:0.25s; }
-.track:hover .title{ color:#ff6b6b; text-shadow:0 0 10px rgba(255,107,107,0.5); }
-.track .duration{color:#aaa;font-weight:700;flex-shrink:0;}
-/* Obrázek pod tracklist */
-#track-image { text-align:center; margin:40px 0; }
-#track-image img { max-width:90%; height:auto; border-radius:16px; box-shadow:0 12px 36px rgba(0,0,0,0.5); }
-/* MINI PLAYER */
-#mini-player{ position:fixed; left:12px;right:12px;bottom:12px; background:linear-gradient(90deg,#ff6b6b,#1a1a1a); padding:12px; border-radius:12px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:0 12px 36px rgba(0,0,0,.5); display:none; z-index:1500; flex-wrap:wrap; }
-.mini-left{display:flex;align-items:center;gap:12px;flex:1;min-width:0;}
-.mini-cover{width:66px;height:66px;border-radius:8px;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,.4);}
-.mini-meta{overflow:hidden;min-width:0;}
-.mini-title{font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;}
-.mini-controls{display:flex;align-items:center;gap:8px;flex-shrink:0;}
-.mini-controls button{width:40px;height:40px;border-radius:50%;border:0;background:#222;color:#fff;font-size:18px;}
-#mini-time{color:#fff;font-size:0.9rem;font-weight:600;margin-right:8px;}
-/* FULLSCREEN PLAYER */
-#fullscreen-player { position: fixed; inset:0; display: none; align-items: flex-end; justify-content: flex-end; z-index: 2000; background:#0b0b0b; overflow:hidden; }
-.bg-video-wrap {position:absolute;inset:0;z-index:0;overflow:hidden;}
-.bg-video-wrap video {width:100%;height:100%;object-fit:cover;}
-#close-full { position:absolute; top:12px; right:12px; z-index:1600; background: rgba(0,0,0,0.55); color:#fff; border:0; padding:8px 10px; border-radius:8px; font-weight:700; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.4); }
-#close-full:hover { background:#ff4d4d;}
-#fullscreen-info { position:relative; z-index:1500; width:100%; padding:36px 30px; background:linear-gradient(90deg, rgba(255,107,107,0.8), rgba(26,26,26,0.8)); border-top-left-radius:18px; border-top-right-radius:18px; box-shadow:0 -18px 60px rgba(0,0,0,.25); backdrop-filter:blur(10px); }
-.info-row { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
-.left-block { display:flex; align-items:center; gap:18px; min-width:0; flex:1; }
-.title-big { font-size:1.9rem; font-weight:900; color:#fff; line-height:1.05; word-break:break-word; flex:1; }
-.controls {display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.controls button { width:52px;height:52px;border-radius:50%;border:0; background:#222;color:#fff;font-size:20px;cursor:pointer; box-shadow:0 8px 30px rgba(0,0,0,.2);transition: all .16s; }
-.controls button:hover {transform: scale(1.04); background:#ff6b6b;}
-#time-big { font-size:2.3rem;font-weight:900;color:#fff; min-width:120px;text-align:right; }
-.progress-wrap {width:100%; margin-top:12px;}
-.progress-bar { width:100%;height:14px;background:rgba(255,255,255,0.15); border-radius:10px;overflow:hidden;cursor:pointer; }
-.progress-fill { height:100%;width:0%; background:#ff6b6b;border-radius:10px; transition: width .06s linear; }
-.fade-in{animation:fadeIn .35s ease both}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-/* RESPONSIVE FIX */
-@media (max-width: 900px) { header img.hero {width:220px;height:220px;} header h1 {font-size:2rem;} header p {font-size:1rem;} .title-big {font-size:1.6rem;} #time-big {font-size:1.8rem;} .mini-title {max-width:180px;} }
-@media (max-width: 600px) { header {padding:30px 14px;} header img.hero {width:180px;height:180px;} header h1 {font-size:1.6rem;margin-top:18px;} header p {font-size:0.95rem;line-height:1.5;text-align:center;} .track {flex-direction:column;padding:10px;} .track .duration {align-self:center;} .mini-cover {width:56px;height:56px;} .mini-title {max-width:140px;font-size:0.9rem;} .controls button {width:44px;height:44px;font-size:18px;} #fullscreen-info {padding:24px 20px;} .info-row {flex-direction:column;align-items:flex-start;} .title-big {font-size:1.4rem;max-width:100%;text-align:left;} #time-big {font-size:1.3rem;text-align:left;} }
+*{margin:0;padding:0;box-sizing:border-box} 
+html,body{ height:100%; font-family:"Inter",sans-serif; overflow-x:hidden; background:#0b0b0b; color:#fff; -webkit-font-smoothing:antialiased; } 
+button{cursor:pointer;} 
+/* HEADER */ 
+header{ position:relative; width:100%; text-align:center; padding:50px 20px; background:#0b0b0b; } 
+header img.hero{ width:260px; height:260px; border-radius:16px; object-fit:cover; box-shadow:0 12px 50px rgba(0,0,0,.6); } 
+header h1{ font-size:2.4rem; font-weight:800; margin-top:22px; margin-bottom:16px; } 
+header p{ font-size:1.05rem; line-height:1.6; color:#ddd; max-width:760px; margin:0 auto; text-align:center; padding:0 12px; } 
+/* TRACKLIST */ 
+.tracklist{ max-width:980px; margin:40px auto; padding:16px; border-radius:12px; background:rgba(255,255,255,0.05); box-shadow:0 8px 30px rgba(0,0,0,0.4); } 
+.track{ display:flex; justify-content:center; align-items:center; padding:14px; border-radius:10px; margin-bottom:10px; transition:0.25s; cursor:pointer; flex-wrap:wrap; text-align:center; gap:10px; } 
+.track:hover{ transform:scale(1.03); background:rgba(255,255,255,0.08); box-shadow:0 0 12px rgba(255,107,107,0.4); } 
+.track .num{width:36px;text-align:center;color:#aaa;font-weight:800;flex-shrink:0;} 
+.track .title{ font-weight:800; color:#fff; flex:1; text-align:center; font-size:1.05rem; transition:0.25s; } 
+.track:hover .title{ color:#ff6b6b; text-shadow:0 0 10px rgba(255,107,107,0.5); } 
+.track .duration{color:#aaa;font-weight:700;flex-shrink:0;} 
+/* Obrázek pod tracklist */ 
+#track-image { text-align:center; margin:40px 0; } 
+#track-image img { max-width:90%; height:auto; border-radius:16px; box-shadow:0 12px 36px rgba(0,0,0,0.5); } 
+/* MINI PLAYER */ 
+#mini-player{ position:fixed; left:12px;right:12px;bottom:12px; background:linear-gradient(90deg,#ff6b6b,#1a1a1a); padding:12px; border-radius:12px; display:flex; align-items:center; justify-content:space-between; gap:12px; box-shadow:0 12px 36px rgba(0,0,0,.5); display:none; z-index:1500; flex-wrap:wrap; } 
+.mini-left{display:flex;align-items:center;gap:12px;flex:1;min-width:0;} 
+.mini-cover{width:66px;height:66px;border-radius:8px;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,.4);} 
+.mini-meta{overflow:hidden;min-width:0;} 
+.mini-title{font-weight:800;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;} 
+.mini-controls{display:flex;align-items:center;gap:8px;flex-shrink:0;} 
+.mini-controls button{width:40px;height:40px;border-radius:50%;border:0;background:#222;color:#fff;font-size:18px;} 
+#mini-time{color:#fff;font-size:0.9rem;font-weight:600;margin-right:8px;} 
+/* FULLSCREEN PLAYER */ 
+#fullscreen-player { position: fixed; inset:0; display: none; align-items: flex-end; justify-content: flex-end; z-index: 2000; background:#0b0b0b; overflow:hidden; } 
+.bg-video-wrap {position:absolute;inset:0;z-index:0;overflow:hidden;} 
+.bg-video-wrap video {width:100%;height:100%;object-fit:cover;} 
+#close-full { position:absolute; top:12px; right:12px; z-index:1600; background: rgba(0,0,0,0.55); color:#fff; border:0; padding:8px 10px; border-radius:8px; font-weight:700; cursor:pointer; box-shadow:0 8px 24px rgba(0,0,0,.4); } 
+#close-full:hover { background:#ff4d4d;} 
+#fullscreen-info { position:relative; z-index:1500; width:100%; padding:36px 30px; background:linear-gradient(90deg, rgba(255,107,107,0.8), rgba(26,26,26,0.8)); border-top-left-radius:18px; border-top-right-radius:18px; box-shadow:0 -18px 60px rgba(0,0,0,.25); backdrop-filter:blur(10px); } 
+.info-row { display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; } 
+.left-block { display:flex; align-items:center; gap:18px; min-width:0; flex:1; } 
+.title-big { font-size:1.9rem; font-weight:900; color:#fff; line-height:1.05; word-break:break-word; flex:1; } 
+.controls {display:flex;align-items:center;gap:12px;flex-wrap:wrap;} 
+.controls button { width:52px;height:52px;border-radius:50%;border:0; background:#222;color:#fff;font-size:20px;cursor:pointer; box-shadow:0 8px 30px rgba(0,0,0,.2);transition: all .16s; } 
+.controls button:hover {transform: scale(1.04); background:#ff6b6b;} 
+#time-big { font-size:2.3rem;font-weight:900;color:#fff; min-width:120px;text-align:right; } 
+.progress-wrap {width:100%; margin-top:12px;} 
+.progress-bar { width:100%;height:14px;background:rgba(255,255,255,0.15); border-radius:10px;overflow:hidden;cursor:pointer; } 
+.progress-fill { height:100%;width:0%; background:#ff6b6b;border-radius:10px; transition: width .06s linear; } 
+.fade-in{animation:fadeIn .35s ease both} 
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}} 
+/* RESPONSIVE FIX */ 
+@media (max-width: 900px) { header img.hero {width:220px;height:220px;} header h1 {font-size:2rem;} header p {font-size:1rem;} .title-big {font-size:1.6rem;} #time-big {font-size:1.8rem;} .mini-title {max-width:180px;} } 
+@media (max-width: 600px) { header {padding:30px 14px;} header img.hero {width:180px;height:180px;} header h1 {font-size:1.6rem;margin-top:18px;} header p {font-size:0.95rem;line-height:1.5;text-align:center;} .track {flex-direction:column;padding:10px;} .track .duration {align-self:center;} .mini-cover {width:56px;height:56px;} .mini-title {max-width:140px;font-size:0.9rem;} .controls button {width:44px;height:44px;font-size:18px;} #fullscreen-info {padding:24px 20px;} .info-row {flex-direction:column;align-items:flex-start;} .title-big {font-size:1.4rem;max-width:100%;text-align:left;} #time-big {font-size:1.3rem;text-align:left;} } 
+/* FOOTER */ 
+footer{ text-align:center; padding:24px 12px; font-size:0.85rem; color:#bbb; border-top:1px solid rgba(255,255,255,0.1); background:#0b0b0b; } 
+footer p{ margin-bottom:6px; }
 </style>
 </head>
 <body>
 <header>
 <img class="hero" src="Live_from_the_Royal_Albert_Hall.jfif" alt="Dua Lipa Live">
 <h1>Dua Lipa — Live from the Royal Albert Hall (2024)</h1>
-<p>
-Live from the Royal Albert Hall je živé album nahrané 27. října 2024 anglicko-albánsko-kosovskou zpěvačkou Dua Lipou a 53 členým orchestrem Heritage Orchestra v legendárním Royal Albert Hall v Londýně. Obsahuje energická vystoupení jejích největších hitů s živou kapelou, choreografií a unikátní atmosférou koncertu. Album zachycuje autentický koncertní zážitek a intimitu vystoupení pro fanoušky na celém světě. Skladby jsou doplněny bohatými orchestrálními aranžemi, které přinášejí nové dimenze známým písním a ukazují umělecký růst Dua Lipy. Prožijte tento nezapomenutelný zážitek 81 minutami zaznamenaným koncertem.
-</p>
+<p> Live from the Royal Albert Hall je živé album nahrané 27. října 2024 anglicko-albánsko-kosovskou zpěvačkou Dua Lipou a 53 členým orchestrem Heritage Orchestra v legendárním Royal Albert Hall v Londýně. Obsahuje energická vystoupení jejích největších hitů s živou kapelou, choreografií a unikátní atmosférou koncertu. Album zachycuje autentický koncertní zážitek a intimitu vystoupení pro fanoušky na celém světě. Skladby jsou doplněny bohatými orchestrálními aranžemi, které přinášejí nové dimenze známým písním a ukazují umělecký růst Dua Lipy. Prožijte tento nezapomenutelný zážitek 81 minutami zaznamenaným koncertem. </p>
 </header>
-
 <div class="tracklist" id="tracklist"></div>
-
 <div id="track-image">
 <img src="Royal_Albert_Hall.jpg" alt="Royal Albert Hall">
 </div>
-
 <div id="mini-player">
 <div class="mini-left">
 <img id="mini-cover" class="mini-cover" src="Live_from_the_Royal_Albert_Hall.jfif" alt="cover">
@@ -89,7 +87,6 @@ Live from the Royal Albert Hall je živé album nahrané 27. října 2024 anglic
 <button id="mini-expand">⬆</button>
 </div>
 </div>
-
 <div id="fullscreen-player">
 <div class="bg-video-wrap"><video id="bg-video" autoplay muted loop playsinline></video></div>
 <button id="close-full">✖</button>
@@ -115,111 +112,21 @@ Live from the Royal Albert Hall je živé album nahrané 27. října 2024 anglic
 </div>
 </div>
 
+<footer>
+<p>© 2024 Dua Lipa. Všechna práva vyhrazena.</p>
+<p>Zákaz kopírování, šíření nebo úpravy obsahu bez souhlasu vlastníka.</p>
+<p>Stránka je chráněna proti virům a neoprávněnému přístupu. Používáním souhlasíte s pravidly.</p>
+</footer>
+
 <script>
-const tracks=[
-{num:1,title:"Overture (Live from the Royal Albert Hall)",mp3:"uvod.mp3",mp4:"a892zo.mp4",duration:"1:47"},
-{num:2,title:"End Of An Era (Live from the Royal Albert Hall)",mp3:"era.mp3",mp4:"a8947k.mp4",duration:"4:00"},
-{num:3,title:"Houdini (Live from the Royal Albert Hall)",mp3:"kuzelnik.mp3",mp4:"a88wpd.mp4",duration:"3:37"},
-{num:4,title:"Training Season (Live from the Royal Albert Hall)",mp3:"100m.mp3",mp4:"a88y8r.mp4",duration:"3:41"},
-{num:5,title:"These Walls (Live from the Royal Albert Hall)",mp3:"zdi.mp3",mp4:"a89cke.mp4",duration:"3:51"},
-{num:6,title:"Whatcha Doing (Live from the Royal Albert Hall)",mp3:"what.mp3",mp4:"breakheart.mp4",duration:"3:59"},
-{num:7,title:"French Exit (Live from the Royal Albert Hall)",mp3:"francois.mp3",mp4:"dontstart.mp4",duration:"3:46"},
-{num:8,title:"Illusion (Live from the Royal Albert Hall)",mp3:"illuze.mp3",mp4:"a89isb.mp4",duration:"3:58"},
-{num:9,title:"Falling Forever (Live from the Royal Albert Hall)",mp3:"navždy.mp3",mp4:"idgaf.mp4",duration:"4:01"},
-{num:10,title:"Anything For Love (Live from the Royal Albert Hall)",mp3:"pro.mp3",mp4:"hotter.mp4",duration:"3:10"},
-{num:11,title:"Maria (Live from the Royal Albert Hall)",mp3:"babi.mp3",mp4:"a89ovs.mp4",duration:"3:46"},
-{num:12,title:"Happy For You (Live from the Royal Albert Hall)",mp3:"tebe.mp3",mp4:"blowyourmind.mp4",duration:"4:24"},
-{num:13,title:"Love Again (Live from the Royal Albert Hall)",mp3:"znovu.mp3",mp4:"a8d9nu.mp4",duration:"6:03"},
-{num:14,title:"Pretty Please (Live from the Royal Albert Hall)",mp3:"prosím.mp3",mp4:"blowyourmind.mp4",duration:"3:26"},
-{num:15,title:"Levitating (Live from the Royal Albert Hall)",mp3:"levitovat.mp3",mp4:"blowyourmind.mp4",duration:"4:25"},
-{num:16,title:"Sunshine (Live from the Royal Albert Hall)",mp3:"slunce.mp3",mp4:"blowyourmind.mp4",duration:"4:43"},
-{num:17,title:"Cold Heart (featuring: Elton John) (Live from the Royal Albert Hall)",mp3:"srdce.mp3",mp4:"blowyourmind.mp4",duration:"5:29"},
-{num:18,title:"Be The One (Live from the Royal Albert Hall)",mp3:"pravý.mp3",mp4:"pravý.mp4",duration:"4:50"},
-{num:19,title:"Dance The Night (Live from the Royal Albert Hall)",mp3:"barbie.mp3",mp4:"barbie.mp4",duration:"4:08"},
-{num:20,title:"Don’t Start Now (Live from the Royal Albert Hall)",mp3:"teď.mp3",mp4:"teď.mp4",duration:"4:26"},
-];
+// Tvůj původní JS kód pro tracklist a přehrávač
+const tracks=[{num:1,title:"Overture (Live from the Royal Albert Hall)",mp3:"uvod.mp3",mp4:"a892zo.mp4",duration:"1:47"},{num:2,title:"End Of An Era (Live from the Royal Albert Hall)",mp3:"era.mp3",mp4:"a8947k.mp4",duration:"4:00"},{num:3,title:"Houdini (Live from the Royal Albert Hall)",mp3:"kuzelnik.mp3",mp4:"a88wpd.mp4",duration:"3:37"},{num:4,title:"Training Season (Live from the Royal Albert Hall)",mp3:"100m.mp3",mp4:"a88y8r.mp4",duration:"3:41"},{num:5,title:"These Walls (Live from the Royal Albert Hall)",mp3:"zdi.mp3",mp4:"a89cke.mp4",duration:"3:51"},{num:6,title:"Whatcha Doing (Live from the Royal Albert Hall)",mp3:"what.mp3",mp4:"breakheart.mp4",duration:"3:59"},{num:7,title:"French Exit (Live from the Royal Albert Hall)",mp3:"francois.mp3",mp4:"dontstart.mp4",duration:"3:46"},{num:8,title:"Illusion (Live from the Royal Albert Hall)",mp3:"illuze.mp3",mp4:"a89isb.mp4",duration:"3:58"},{num:9,title:"Falling Forever (Live from the Royal Albert Hall)",mp3:"navždy.mp3",mp4:"idgaf.mp4",duration:"4:01"},{num:10,title:"Anything For Love (Live from the Royal Albert Hall)",mp3:"pro.mp3",mp4:"hotter.mp4",duration:"3:10"},{num:11,title:"Maria (Live from the Royal Albert Hall)",mp3:"babi.mp3",mp4:"a89ovs.mp4",duration:"3:46"},{num:12,title:"Happy For You (Live from the Royal Albert Hall)",mp3:"tebe.mp3",mp4:"blowyourmind.mp4",duration:"4:24"},{num:13,title:"Love Again (Live from the Royal Albert Hall)",mp3:"znovu.mp3",mp4:"a8d9nu.mp4",duration:"6:03"},{num:14,title:"Pretty Please (Live from the Royal Albert Hall)",mp3:"prosím.mp3",mp4:"blowyourmind.mp4",duration:"3:26"},{num:15,title:"Levitating (Live from the Royal Albert Hall)",mp3:"levitovat.mp3",mp4:"blowyourmind.mp4",duration:"4:25"},{num:16,title:"Sunshine (Live from the Royal Albert Hall)",mp3:"slunce.mp3",mp4:"blowyourmind.mp4",duration:"4:43"},{num:17,title:"Cold Heart (featuring: Elton John) (Live from the Royal Albert Hall)",mp3:"srdce.mp3",mp4:"blowyourmind.mp4",duration:"5:29"},{num:18,title:"Be The One (Live from the Royal Albert Hall)",mp3:"pravý.mp3",mp4:"pravý.mp4",duration:"4:50"},{num:19,title:"Dance The Night (Live from the Royal Albert Hall)",mp3:"barbie.mp3",mp4:"barbie.mp4",duration:"4:08"},{num:20,title:"Don’t Start Now (Live from the Royal Albert Hall)",mp3:"teď.mp3",mp4:"teď.mp4",duration:"4:26"},];
+const tracklistDiv=document.getElementById("tracklist"); tracks.forEach(track=>{ const div=document.createElement("div"); div.className="track fade-in"; div.dataset.num=track.num-1; div.innerHTML=`<div class="num">${track.num}</div><div class="title">${track.title}</div><div class="duration">${track.duration}</div>`; div.addEventListener("click",()=>playTrack(track.num-1)); tracklistDiv.appendChild(div); });
+const miniPlayer=document.getElementById("mini-player"); const miniTitle=document.getElementById("mini-title"); const miniCover=document.getElementById("mini-cover"); const miniPlay=document.getElementById("mini-play"); const miniPrev=document.getElementById("mini-prev"); const miniNext=document.getElementById("mini-next"); const miniExpand=document.getElementById("mini-expand"); const miniTime=document.getElementById("mini-time"); const fsPlayer=document.getElementById("fullscreen-player"); const fsTitle=document.getElementById("fs-title"); const bgVideo=document.getElementById("bg-video"); const closeFull=document.getElementById("close-full"); const playBtn=document.getElementById("play-btn"); const prevBtn=document.getElementById("prev-btn"); const nextBtn=document.getElementById("next-btn"); const progressBar=document.getElementById("progress-bar"); const progressFill=document.getElementById("progress-fill"); const timeBig=document.getElementById("time-big"); let currentIndex=0; let audio=new Audio(); audio.autoplay=false; audio.preload="metadata"; function playTrack(index){ currentIndex=index; const t=tracks[currentIndex]; audio.src=t.mp3; audio.play(); miniPlayer.style.display="flex"; miniTitle.textContent=t.title; miniCover.src="Live_from_the_Royal_Albert_Hall.jfif"; fsTitle.textContent=t.title; bgVideo.src=t.mp4; updateButtons(); } function playNext(){currentIndex=(currentIndex+1)%tracks.length;playTrack(currentIndex);} function playPrev(){currentIndex=(currentIndex-1+tracks.length)%tracks.length;playTrack(currentIndex);} audio.addEventListener("ended",()=>playNext()); miniPlay.addEventListener("click",()=>{audio.paused?audio.play():audio.pause();updateButtons();}); miniNext.addEventListener("click",playNext); miniPrev.addEventListener("click",playPrev); miniExpand.addEventListener("click",()=>{fsPlayer.style.display="flex";}); closeFull.addEventListener("click",()=>{fsPlayer.style.display="none";}); playBtn.addEventListener("click",()=>{audio.paused?audio.play():audio.pause();updateButtons();}); nextBtn.addEventListener("click",playNext); prevBtn.addEventListener("click",playPrev); function updateButtons(){ miniPlay.textContent=audio.paused?"▶":"⏸"; playBtn.textContent=audio.paused?"▶":"⏸"; } audio.addEventListener("timeupdate",()=>{ const c=audio.currentTime; const d=audio.duration||0; const mm=Math.floor(c/60),ss=Math.floor(c%60); const mmD=Math.floor(d/60),ssD=Math.floor(d%60); miniTime.textContent=`${mm}:${ss<10?"0"+ss:ss} / ${mmD}:${ssD<10?"0"+ssD:ssD}`; timeBig.textContent=miniTime.textContent; progressFill.style.width=d?((c/d)*100)+"%":"0%"; }); progressBar.addEventListener("click",(e)=>{ const rect=progressBar.getBoundingClientRect(); const percent=(e.clientX-rect.left)/rect.width; audio.currentTime=audio.duration*percent; });
 
-const tracklistDiv=document.getElementById("tracklist");
-tracks.forEach(track=>{
-const div=document.createElement("div");
-div.className="track fade-in";
-div.dataset.num=track.num-1;
-div.innerHTML=`<div class="num">${track.num}</div><div class="title">${track.title}</div><div class="duration">${track.duration}</div>`;
-div.addEventListener("click",()=>playTrack(track.num-1));
-tracklistDiv.appendChild(div);
-});
-
-const miniPlayer=document.getElementById("mini-player");
-const miniTitle=document.getElementById("mini-title");
-const miniCover=document.getElementById("mini-cover");
-const miniPlay=document.getElementById("mini-play");
-const miniPrev=document.getElementById("mini-prev");
-const miniNext=document.getElementById("mini-next");
-const miniExpand=document.getElementById("mini-expand");
-const miniTime=document.getElementById("mini-time");
-const fsPlayer=document.getElementById("fullscreen-player");
-const fsTitle=document.getElementById("fs-title");
-const bgVideo=document.getElementById("bg-video");
-const closeFull=document.getElementById("close-full");
-const playBtn=document.getElementById("play-btn");
-const prevBtn=document.getElementById("prev-btn");
-const nextBtn=document.getElementById("next-btn");
-const progressBar=document.getElementById("progress-bar");
-const progressFill=document.getElementById("progress-fill");
-const timeBig=document.getElementById("time-big");
-
-let currentIndex=0;
-let audio=new Audio();
-audio.autoplay=false;
-audio.preload="metadata";
-
-function playTrack(index){
-currentIndex=index;
-const t=tracks[currentIndex];
-audio.src=t.mp3;
-audio.play();
-miniPlayer.style.display="flex";
-miniTitle.textContent=t.title;
-miniCover.src="Live_from_the_Royal_Albert_Hall.jfif";
-fsTitle.textContent=t.title;
-bgVideo.src=t.mp4;
-updateButtons();
-}
-
-function playNext(){currentIndex=(currentIndex+1)%tracks.length;playTrack(currentIndex);}
-function playPrev(){currentIndex=(currentIndex-1+tracks.length)%tracks.length;playTrack(currentIndex);}
-
-audio.addEventListener("ended",()=>playNext());
-
-miniPlay.addEventListener("click",()=>{audio.paused?audio.play():audio.pause();updateButtons();});
-miniNext.addEventListener("click",playNext);
-miniPrev.addEventListener("click",playPrev);
-miniExpand.addEventListener("click",()=>{fsPlayer.style.display="flex";});
-closeFull.addEventListener("click",()=>{fsPlayer.style.display="none";});
-playBtn.addEventListener("click",()=>{audio.paused?audio.play():audio.pause();updateButtons();});
-nextBtn.addEventListener("click",playNext);
-prevBtn.addEventListener("click",playPrev);
-
-function updateButtons(){
-miniPlay.textContent=audio.paused?"▶":"⏸";
-playBtn.textContent=audio.paused?"▶":"⏸";
-}
-
-audio.addEventListener("timeupdate",()=>{
-const c=audio.currentTime;
-const d=audio.duration||0;
-const mm=Math.floor(c/60),ss=Math.floor(c%60);
-const mmD=Math.floor(d/60),ssD=Math.floor(d%60);
-miniTime.textContent=`${mm}:${ss<10?"0"+ss:ss} / ${mmD}:${ssD<10?"0"+ssD:ssD}`;
-timeBig.textContent=miniTime.textContent;
-progressFill.style.width=d?((c/d)*100)+"%":"0%";
-});
-
-progressBar.addEventListener("click",(e)=>{
-const rect=progressBar.getBoundingClientRect();
-const percent=(e.clientX-rect.left)/rect.width;
-audio.currentTime=audio.duration*percent;
-});
+// Zakázání pravého tlačítka a kopírování
+document.addEventListener('contextmenu', event => event.preventDefault());
+document.addEventListener('copy', event => event.preventDefault());
 </script>
 </body>
 </html>
